@@ -2,18 +2,19 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 import fundamentus
 from src.models.stocks import StockModel, DividenByYear
+from src.talkers import Stock
 from typing import List
 
-class Fundamentus:
-    def __init__(self, ticker:str) -> None:
-        self.ticker = ticker.upper()
+class Fundamentus(Stock):
+    def __init__(self, ticker: str) -> None:
+        super().__init__(ticker)
         self.all_tickers = fundamentus.list_papel_all()
 
     def get_price(self) -> StockModel|None:
-        if self.ticker not in self.all_tickers:
+        if self.ticker.upper() not in self.all_tickers:
             return 
         
-        stock_detail = fundamentus.get_detalhes_papel(f'{self.ticker}')
+        stock_detail = fundamentus.get_detalhes_papel(f'{self.ticker.upper()}')
         name = stock_detail['Empresa'][0]
         price = stock_detail['Cotacao']
         stock = StockModel(ticker=self.ticker, price=price, name=name)
@@ -21,11 +22,11 @@ class Fundamentus:
         return stock
 
     def get_dividends_by_year(self) -> List[DividenByYear]|None:
-        if self.ticker not in self.all_tickers:
+        if self.ticker.upper() not in self.all_tickers:
             return 
 
         req = Request(
-            url=f'https://www.fundamentus.com.br/proventos.php?papel={self.ticker}&tipo=2',
+            url=f'https://www.fundamentus.com.br/proventos.php?papel={self.ticker.upper()}&tipo=2',
             headers={'User-Agent': 'Mozilla/5.0'}
         )
         page = urlopen(req).read()

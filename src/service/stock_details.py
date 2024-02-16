@@ -1,4 +1,3 @@
 from src.talkers.fundamentus import Fundamentus
+from src.talkers.yahoo_finance import YahooFinance
 
-class Stock(Fundamentus):
-    pass
