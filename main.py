@@ -1,14 +1,18 @@
 from fastapi import FastAPI
 import uvicorn
+from decouple import config
 
-from src.handlers.test import test_rout
+from src.handlers.stocks import stocks_rout
 
-app = FastAPI()
-app.include_router(test_rout)
+
+app = FastAPI(title='Wallet Bazin')
+app.include_router(stocks_rout)
+
 
 if __name__ == '__main__':
     uvicorn.run(
         app,
-        host='127.0.0.1',
-        port=8000
+        host=config('HOST'),
+        port=int(config('PORT')),
+        workers=int(config('WORKERS'))
     )
