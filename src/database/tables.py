@@ -37,22 +37,6 @@ class Price(Base):
     stock       = relationship('Stock', back_populates='prices')
 
 
-class Dividend(Base):
-    __tablename__ = 'dividends'
-
-    id          = Column(Integer, primary_key=True, autoincrement=True)
-
-    year        = Column(String(10), default='AAAA', nullable=False)
-    value_year  = Column(Float(2), nullable=True)
-
-    fk_stock    = Column(Integer, ForeignKey('stocks.id'), nullable=False)
-
-    created_at  = Column(DateTime, default=datetime.now())
-    updated_at  = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
-
-    stock       = relationship('Stock', back_populates='dividends')
-
-
 class Wallet(Base):
     __tablename__ = 'wallets'
 

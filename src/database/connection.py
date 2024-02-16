@@ -4,7 +4,7 @@ from decouple import config
 from urllib.parse import quote
 
 from .tables import Base
-from .tables import Stock, Price, Dividend, Investor, Wallet
+from .tables import Stock, Price, Investor, Wallet
 
 class DatabaseManager:
     def __init__(self):

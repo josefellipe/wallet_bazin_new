@@ -20,7 +20,6 @@ class Fundamentus:
         del stock.dividends
         return stock
 
-
     def get_dividends_by_year(self) -> List[DividenByYear]|None:
         if self.ticker not in self.all_tickers:
             return 
